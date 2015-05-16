@@ -24,6 +24,19 @@ class Component implements riot.IRiotComponent {
 
 }
 ```
+your template riot
+```
+  <button onclick={incr}>incr</button>
+   <span class="counter">{counter}</span>
+```
+
+your template css injected during the definition of component
+```
+  .counter {
+    background:red;
+    color:yellow;
+  }
+```
 
 in your html page
 ```
@@ -37,5 +50,4 @@ in your html page
     <script src="test.js"></script>
   </body>
 </html>
-
 ```
