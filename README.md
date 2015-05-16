@@ -53,4 +53,4 @@ in your html page
 ```
 
 example with haxe code compiled to javascript
-http://jsfiddle.net/ohtfow3z/
+http://jsfiddle.net/ohtfow3z/1/
