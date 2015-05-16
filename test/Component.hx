@@ -11,7 +11,7 @@ class Component implements riot.IRiotComponent {
   }
 
   public function new(v,opts) {
-		bind_view(v);
+    bind_view(v);
     view.counter = 0;
 	}
 
