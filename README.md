@@ -1,7 +1,7 @@
 # riot.hx
 haxe wrapper around Riot.js
 
-in you code
+in you code (see folder test for complete example)
 
 haxe component
 ```
