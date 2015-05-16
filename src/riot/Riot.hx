@@ -5,9 +5,9 @@ class Riot {
 
     @:extern
     public static inline function injectCss(css:String) {
-    			var style = js.Browser.document.createStyleElement();
-    			style.innerHTML = css;
-    			js.Browser.document.head.appendChild(style);
+          var style = js.Browser.document.createStyleElement();
+          style.innerHTML = css;
+          js.Browser.document.head.appendChild(style);
     }
 
     @:extern
