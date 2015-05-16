@@ -1,0 +1,11 @@
+-cp src
+-main Main
+-js bin/riot.js
+-lib tink_macro
+--next
+-cp src
+-cp test
+-main Test
+-js bin/test.js
+-lib tink_macro
+-D analizer
