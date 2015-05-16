@@ -51,3 +51,6 @@ in your html page
   </body>
 </html>
 ```
+
+example with haxe code compiled to javascript
+http://jsfiddle.net/ohtfow3z/
