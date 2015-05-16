@@ -2,6 +2,8 @@
 -main Main
 -js bin/riot.js
 -lib tink_macro
+-D analizer
+-dce full
 --next
 -cp src
 -cp test
@@ -9,3 +11,4 @@
 -js bin/test.js
 -lib tink_macro
 -D analizer
+-dce full
