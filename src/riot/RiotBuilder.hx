@@ -31,24 +31,30 @@ class RiotBuilder {
 
   macro public static function build():Array<Field> {
 
-      var fields = Context.getBuildFields();
+    var fields = Context.getBuildFields();
 
-      var tagName:String = "";
-      var templateFile = "";
-      var template = "";
-      var autoMount = false;
+    var tagName:String = "";
+    var templateFile = "";
+    var template = "";
+    var autoMount = false;
 
-      var cls1 = Context.getLocalClass().toString();
-      var cls = Context.getLocalClass().get();
-      var meta = cls.meta.get().toMap();
+    var cls1 = Context.getLocalClass().toString();
+    var cls = Context.getLocalClass().get();
+    var meta = cls.meta.get().toMap();
 
-      if (getAnnotation(':tagName') != null) {
-        tagName = getAnnotation(':tagName')[0][0].toString();
-      }
+    if (getAnnotation(':tagName') != null) {
+      tagName = getAnnotation(':tagName')[0][0].toString();
+    }
 
-      if (getAnnotation(':autoMount') != null) {
-        autoMount = true;
-      }
+    if (getAnnotation(':autoMount') != null) {
+      autoMount = true;
+    }
+
+    var exprAutoMount = macro null;
+    if (autoMount == true ) {
+      exprAutoMount = macro untyped riot.mount($i{tagName});
+    }
+
     var template = getTemplateFromAnnotation(meta,':templateFile');
     var cssFile  = getTemplateFromAnnotation(meta,':cssFile');
 
@@ -79,7 +85,7 @@ class RiotBuilder {
                       var self = __js__('this');
                       var instance =  __js__('new cls(self,opts)');
                   });
-                  riot.mount('*');
+                  $e{exprAutoMount};
 
               }
 

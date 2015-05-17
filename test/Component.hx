@@ -1,6 +1,7 @@
 @:tagName('counter')
 @:templateFile('test/templates/counter/counter.html')
 @:cssFile('test/templates/counter/counter.css')
+@:autoMount
 @:keep
 class Component implements riot.IRiotComponent {
   public var view:Dynamic;
