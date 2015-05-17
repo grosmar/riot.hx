@@ -26,8 +26,19 @@ class RiotBuilder {
     } else {
       return null;
     }
-
   }
+
+  static function bindFields(fields:Array<Field>) {
+    return fields.filter(function(field) {
+        return field.meta.toMap().exists(':bind');
+    }).map(function(field) {
+      var name = field.name;
+      return macro  {
+          untyped view.$name=$i{name};
+      };
+    });
+  }
+
 
   macro public static function build():Array<Field> {
 
@@ -58,63 +69,70 @@ class RiotBuilder {
     var template = getTemplateFromAnnotation(meta,':templateFile');
     var cssFile  = getTemplateFromAnnotation(meta,':cssFile');
 
-      var binds = fields.filter(function(field) {
-          return field.meta.toMap().exists(':bind');
-      }).map(function(field) {
-        var name = field.name;
+
+    var binds = bindFields(fields);
+
+
+    if (haxe.macro.Context.getLocalClass().get().superClass != null ) {
+      var fieldsSuperClass = haxe.macro.Context.getLocalClass().get().superClass.t.get().fields.get();
+      var bindsSuperClass = fieldsSuperClass.filter(function(f) {
+        return f.meta.get().toMap().exists(':bind');
+      }).map(function(f) {
+        var name = f.name;
         return macro  {
             untyped view.$name=$i{name};
         };
       });
+      binds= binds.concat(bindsSuperClass);
+    }
 
+    var init = (macro class Temp {
 
-      var init = (macro class Temp {
+      static function __init__() {
+        untyped {
 
-        static function __init__() {
-          untyped {
+            var tagName = $i{tagName};
 
-              var tagName = $i{tagName};
+            if (tagName != "") {
 
-              if (tagName != "") {
+                var template = $v{template};
+                riot.Riot.injectCss($v{cssFile});
 
-                  var template = $v{template};
-                  riot.Riot.injectCss($v{cssFile});
+                riot.tag(tagName,template,function(opts) {
+                    var cls = $i{cls1};
+                    var self = __js__('this');
+                    var instance =  __js__('new cls(self,opts)');
+                });
+                $e{exprAutoMount};
 
-                  riot.tag(tagName,template,function(opts) {
-                      var cls = $i{cls1};
-                      var self = __js__('this');
-                      var instance =  __js__('new cls(self,opts)');
-                  });
-                  $e{exprAutoMount};
+            }
 
-              }
-
-          };
-        }
-
-       public inline function bind_view(v) {
-           untyped { view = v; };
-            $b{binds};
-       }
-
-       inline function update(?value:Dynamic) {
-         untyped view.update(value);
-       }
-
-       inline function on(event:String,cb:Dynamic) {
-         untyped view.on(event,cb);
-       }
-
-       inline function root() {
-         return untyped view.root;
-       }
-
-      }).fields;
-
-      for (fld in init) {
-        fields.push(fld);
+        };
       }
 
-      return fields;
+     public inline function bind_view(v) {
+         untyped { view = v; };
+          $b{binds};
+     }
+
+     inline function update(?value:Dynamic) {
+       untyped view.update(value);
+     }
+
+     inline function on(event:String,cb:Dynamic) {
+       untyped view.on(event,cb);
+     }
+
+     inline function root() {
+       return untyped view.root;
+     }
+
+    }).fields;
+
+    for (fld in init) {
+      fields.push(fld);
+    }
+
+    return fields;
   }
 }

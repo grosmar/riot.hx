@@ -1,5 +1,6 @@
 import riot.Riot;
 import Component;
+import CompomentInheritance;
 using riot.RiotTools;
 
 class Test {

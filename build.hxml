@@ -9,3 +9,4 @@
 -js bin/test.js
 -lib tink_macro
 -D analizer
+--no-traces
