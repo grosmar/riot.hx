@@ -44,7 +44,7 @@ class RiotBuilder {
 
     var fields = Context.getBuildFields();
 
-    var tagName:String = "";
+    var tagName:String = null;
     var templateFile = "";
     var template = "";
     var autoMount = false;
@@ -56,6 +56,8 @@ class RiotBuilder {
     if (getAnnotation(':tagName') != null) {
       tagName = getAnnotation(':tagName')[0][0].toString();
     }
+    trace(tagName);
+    if (tagName == null) return null;
 
     if (getAnnotation(':autoMount') != null) {
       autoMount = true;

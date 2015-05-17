@@ -1,5 +1,7 @@
+using riot.RiotTools;
+
 @:keep
-class BaseComponent  {
+class BaseComponent implements riot.IRiotComponent  {
   public var view:Dynamic;
 
   @:bind function incr() {
@@ -10,7 +12,7 @@ class BaseComponent  {
   @:bind function async_incr() {
     haxe.Timer.delay(function() {
       view.counter++;
-      view.update();
+      update();
     },2000);
   }
 
@@ -27,7 +29,7 @@ class BaseComponent  {
 @:cssFile('test/templates/counter/counter.css')
 @:autoMount
 @:keep
-class CompomentInheritance extends BaseComponent implements riot.IRiotComponent {
+class CompomentInheritance extends BaseComponent  {
 
 
   public function new(v,opts) {
