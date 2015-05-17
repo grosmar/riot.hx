@@ -1,5 +1,4 @@
 package riot;
-
 import sys.io.File;
 import haxe.macro.Context;
 import haxe.macro.Expr;
@@ -20,6 +19,15 @@ class RiotBuilder {
     return  File.getContent(filePath);
   }
 
+  static inline function getAnnotation(name) {
+    var meta = Context.getLocalClass().get().meta.get().toMap();
+    if (meta.exists(name)) {
+      return meta.get(name);
+    } else {
+      return null;
+    }
+
+  }
 
   macro public static function build():Array<Field> {
 
@@ -28,19 +36,19 @@ class RiotBuilder {
       var tagName:String = "";
       var templateFile = "";
       var template = "";
-
+      var autoMount = false;
 
       var cls1 = Context.getLocalClass().toString();
       var cls = Context.getLocalClass().get();
-
-
-
       var meta = cls.meta.get().toMap();
-      if (meta.exists(':tagName')) {
-        tagName = meta.get(':tagName')[0][0].toString();
+
+      if (getAnnotation(':tagName') != null) {
+        tagName = getAnnotation(':tagName')[0][0].toString();
       }
 
-
+      if (getAnnotation(':autoMount') != null) {
+        autoMount = true;
+      }
     var template = getTemplateFromAnnotation(meta,':templateFile');
     var cssFile  = getTemplateFromAnnotation(meta,':cssFile');
 
@@ -55,8 +63,6 @@ class RiotBuilder {
 
 
       var init = (macro class Temp {
-
-        var view:Dynamic;
 
         static function __init__() {
           untyped {
@@ -85,12 +91,23 @@ class RiotBuilder {
             $b{binds};
        }
 
+       inline function update(?value:Dynamic) {
+         untyped view.update(value);
+       }
+
+       inline function on(event:String,cb:Dynamic) {
+         untyped view.on(event,cb);
+       }
+
+       inline function root() {
+         return untyped view.root;
+       }
 
       }).fields;
 
-
-      fields.push(init[1]);
-      fields.push(init[2]);
+      for (fld in init) {
+        fields.push(fld);
+      }
 
       return fields;
   }
