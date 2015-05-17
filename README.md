@@ -1,6 +1,12 @@
 # riot.hx
 haxe wrapper around Riot.js
 
+for install from git
+```
+haxelib git riot.hx https://github.com/francescoagati/riot.hx.git
+```
+
+
 in you code (see folder test for complete example)
 
 haxe component
