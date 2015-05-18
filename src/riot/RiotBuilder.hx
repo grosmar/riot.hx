@@ -117,18 +117,6 @@ class RiotBuilder {
           $b{binds};
      }
 
-     inline function update(?value:Dynamic) {
-       untyped view.update(value);
-     }
-
-     inline function on(event:String,cb:Dynamic) {
-       untyped view.on(event,cb);
-     }
-
-     inline function root() {
-       return untyped view.root;
-     }
-
     }).fields;
 
     for (fld in init) {

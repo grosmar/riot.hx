@@ -15,4 +15,8 @@ class RiotTools {
     untyped component.on(event,cb);
   }
 
+  public static inline function root(component:riot.IRiotComponent) {
+    return untyped component.root;
+  }
+
 }

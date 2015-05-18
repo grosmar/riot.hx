@@ -1,3 +1,5 @@
+using riot.RiotTools;
+
 @:tagName('counter')
 @:templateFile('test/templates/counter/counter.html')
 @:cssFile('test/templates/counter/counter.css')
@@ -26,7 +28,7 @@ class Component implements riot.IRiotComponent {
   public function new(v,opts) {
     bind_view(v);
     view.counter = 0;
-    on('mount',mount);
+    view.on('mount',mount);
   }
 
 }

@@ -36,7 +36,7 @@ class CompomentInheritance extends BaseComponent  {
 
     bind_view(v);
     view.counter = 0;
-    on('mount',mount);
+    view.on('mount',mount);
   }
 
 }
