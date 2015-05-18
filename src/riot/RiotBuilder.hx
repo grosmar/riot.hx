@@ -22,7 +22,6 @@ class RiotBuilder {
 
     if (meta.exists(annotationInline)) {
       var content = meta.get(annotationInline)[0][0].toString().replace("'","").replace('\\"','"').replace("\\n","").replace("\\r","");
-      trace(content);
       return  content;
     }
     return "";
