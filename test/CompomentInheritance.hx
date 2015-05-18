@@ -40,3 +40,29 @@ class CompomentInheritance extends BaseComponent  {
   }
 
 }
+
+
+@:tagName('component_inheritance-2')
+@:template('
+  <button onclick={incr}>incr</button>
+  <button onclick={async_incr}>async incr</button>
+  <span class="counter">{counter}</span>
+')
+@:css('
+  .counter {
+    background:red;
+    color:yellow;
+  }
+')
+@:keep
+class CompomentInheritance2 extends BaseComponent  {
+
+
+  public function new(v,opts) {
+
+    bind_view(v);
+    view.counter = 0;
+    view.on('mount',mount);
+  }
+
+}

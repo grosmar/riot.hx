@@ -5,6 +5,9 @@ using riot.RiotTools;
 
 class Test {
 
-  public static function main() {}
+  public static function main() {
+    js.Browser.document.body.riot_mount('component_inheritance-2');
+
+  }
 
 }

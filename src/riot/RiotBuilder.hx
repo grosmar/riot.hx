@@ -10,13 +10,20 @@ using StringTools;
 
 class RiotBuilder {
 
-  static function getTemplateFromAnnotation(meta:Map<String, Array<Array<Expr>>>,annotation:String):String {
+  static function getTemplateFromAnnotation(meta:Map<String, Array<Array<Expr>>>,annotationFile:String,annotationInline:String):String {
 
-    var filePath = meta.get(annotation)[0][0].toString().replace("'","");
-    var absolutePath = Sys.getCwd() + "/" + filePath;
-    trace(absolutePath);
-    if (sys.FileSystem.exists(filePath) == false) throw 'file not exists';
-    return  File.getContent(filePath);
+    if (meta.exists(annotationFile)) {
+      var filePath = meta.get(annotationFile)[0][0].toString().replace("'","");
+      var absolutePath = Sys.getCwd() + "/" + filePath;
+      trace(absolutePath);
+      if (sys.FileSystem.exists(filePath) == false) throw 'file not exists';
+      return  File.getContent(filePath);
+    }
+
+    if (meta.exists(annotationInline)) {
+      return  meta.get(annotationInline)[0][0].toString().replace("'","");
+    }
+    return "";
   }
 
   static inline function getAnnotation(name) {
@@ -68,8 +75,8 @@ class RiotBuilder {
       exprAutoMount = macro untyped riot.mount($i{tagName});
     }
 
-    var template = getTemplateFromAnnotation(meta,':templateFile');
-    var cssFile  = getTemplateFromAnnotation(meta,':cssFile');
+    var template = getTemplateFromAnnotation(meta,':templateFile',':template');
+    var cssFile  = getTemplateFromAnnotation(meta,':cssFile',':css');
 
 
     var binds = bindFields(fields);
