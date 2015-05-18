@@ -44,14 +44,15 @@ class CompomentInheritance extends BaseComponent  {
 
 @:tagName('component_inheritance-2')
 @:template('
+  component inheritance 2
   <button onclick={incr}>incr</button>
   <button onclick={async_incr}>async incr</button>
-  <span class="counter">{counter}</span>
+  <span class="counter2">{counter}</span>
 ')
 @:css('
-  .counter {
-    background:red;
-    color:yellow;
+  .counter2 {
+    background:green;
+    color:blue;
   }
 ')
 @:keep

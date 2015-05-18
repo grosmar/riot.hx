@@ -6,7 +6,7 @@ using riot.RiotTools;
 class Test {
 
   public static function main() {
-    js.Browser.document.body.riot_mount('component_inheritance-2');
+    js.Browser.document.getElementById('viewport-component').riot_mount('component_inheritance-2');
 
   }
 

@@ -21,7 +21,9 @@ class RiotBuilder {
     }
 
     if (meta.exists(annotationInline)) {
-      return  meta.get(annotationInline)[0][0].toString().replace("'","");
+      var content = meta.get(annotationInline)[0][0].toString().replace("'","").replace('\\"','"').replace("\\n","").replace("\\r","");
+      trace(content);
+      return  content;
     }
     return "";
   }
