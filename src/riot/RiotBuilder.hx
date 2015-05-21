@@ -126,7 +126,6 @@ class RiotBuilder {
                     var instance =  __js__('new cls(self,opts)');
                 });
                 $e{exprAutoMount};
-
             }
 
         };
