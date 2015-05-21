@@ -22,7 +22,7 @@ class Component implements riot.IRiotComponent {
 
   function mount() {
     trace('component mounted on $root()');
-    untyped console.log(root());
+    trace(root().nodeName);
   }
 
   public function new(v,opts) {

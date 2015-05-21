@@ -2,7 +2,7 @@ package riot;
 import js.html.Element;
 
 class RiotTools {
-  
+
   public static inline function riot_mount(element:Element,?tagName:String = '*',?opts:Dynamic = null):Array<Dynamic>{
     return untyped riot.Riot.mount2(element,tagName,opts);
   }
@@ -15,7 +15,7 @@ class RiotTools {
     untyped component.on(event,cb);
   }
 
-  public static inline function root(component:riot.IRiotComponent) {
+  public static inline function root(component:riot.IRiotComponent):Element {
     return untyped component.root;
   }
 
