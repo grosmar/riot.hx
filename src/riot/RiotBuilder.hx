@@ -121,7 +121,7 @@ class RiotBuilder {
                 riot.Riot.injectCss($v{cssFile});
 
                 riot.tag(tagName,template,function(opts) {
-                    var cls = __js__("$hxClasses[{0}]",$i{cls1});
+                    var cls = __js__("$hxClasses[{0}]",$v{cls1});
                     var self = __js__('this');
                     var instance =  __js__('new cls(self,opts)');
                 });
