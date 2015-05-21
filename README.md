@@ -11,9 +11,11 @@ in you code (see folder test for complete example)
 
 haxe component
 ```
+using riot.RiotTools;
+
 @:tagName('counter')
-@:templateFile('test/templates/counter/counter.html')
-@:cssFile('test/templates/counter/counter.css')
+@:templateFile('templates/counter/counter.html')
+@:cssFile('templates/counter/counter.css')
 @:autoMount
 @:keep
 class Component implements riot.IRiotComponent {
@@ -39,7 +41,7 @@ class Component implements riot.IRiotComponent {
   public function new(v,opts) {
     bind_view(v);
     view.counter = 0;
-    on('mount',mount);
+    view.on('mount',mount);
   }
 
 }
