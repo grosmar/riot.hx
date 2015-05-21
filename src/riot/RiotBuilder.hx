@@ -12,30 +12,22 @@ class RiotBuilder {
 
 
   static function loadFileAsString(path:String) {
-       try {
-           var p = haxe.macro.Context.resolvePath(path);
-           return sys.io.File.getContent(p);
-       }
-       catch(e:Dynamic) {
-           throw 'error load file $path';
-           return haxe.macro.Context.error('Failed to load file $path: $e', Context.currentPos());
-       }
+     try {
+         var p = haxe.macro.Context.resolvePath(path);
+         return sys.io.File.getContent(p);
+     }
+     catch(e:Dynamic) {
+         throw 'error load file $path';
+         return haxe.macro.Context.error('Failed to load file $path: $e', Context.currentPos());
+     }
   }
 
   static function getTemplateFromAnnotation(meta:Map<String, Array<Array<Expr>>>,annotationFile:String,annotationInline:String):String {
 
     if (meta.exists(annotationFile)) {
-
-      //var pathClass = Context.getLocalClass().toString();
-      //trace(pathClass);
-
-      var filePath = meta.get(annotationFile)[0][0].toString().replace("'","");
+    var filePath = meta.get(annotationFile)[0][0].toString().replace("'","");
       trace(filePath);
       return loadFileAsString(filePath);
-      //var absolutePath = Sys.getCwd() + "/" + filePath;
-      //trace(absolutePath);
-      //if (sys.FileSystem.exists(filePath) == false) throw 'file not exists';
-      //return  File.getContent(filePath);
     }
 
     if (meta.exists(annotationInline)) {
