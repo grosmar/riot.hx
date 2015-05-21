@@ -24,9 +24,9 @@ class BaseComponent implements riot.IRiotComponent  {
 }
 
 
-@:tagName('component_inheritance')
-@:templateFile('test/templates/counter/counter.html')
-@:cssFile('test/templates/counter/counter.css')
+@:tagName('component-inheritance-1')
+@:templateFile('templates/counter/counter.html')
+@:cssFile('templates/counter/counter.css')
 @:autoMount
 @:keep
 class CompomentInheritance extends BaseComponent  {
@@ -42,7 +42,7 @@ class CompomentInheritance extends BaseComponent  {
 }
 
 
-@:tagName('component_inheritance-2')
+@:tagName('component-inheritance-2')
 @:template('
   component inheritance 2
   <button onclick={incr}>incr</button>
@@ -51,7 +51,7 @@ class CompomentInheritance extends BaseComponent  {
 ')
 @:css('
   .counter2 {
-    background:green;
+    background:yellow;
     color:blue;
   }
 ')

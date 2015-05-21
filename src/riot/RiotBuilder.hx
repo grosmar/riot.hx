@@ -10,14 +10,32 @@ using StringTools;
 
 class RiotBuilder {
 
+
+  static function loadFileAsString(path:String) {
+       try {
+           var p = haxe.macro.Context.resolvePath(path);
+           return sys.io.File.getContent(p);
+       }
+       catch(e:Dynamic) {
+           throw 'error load file $path';
+           return haxe.macro.Context.error('Failed to load file $path: $e', Context.currentPos());
+       }
+  }
+
   static function getTemplateFromAnnotation(meta:Map<String, Array<Array<Expr>>>,annotationFile:String,annotationInline:String):String {
 
     if (meta.exists(annotationFile)) {
+
+      //var pathClass = Context.getLocalClass().toString();
+      //trace(pathClass);
+
       var filePath = meta.get(annotationFile)[0][0].toString().replace("'","");
-      var absolutePath = Sys.getCwd() + "/" + filePath;
-      trace(absolutePath);
-      if (sys.FileSystem.exists(filePath) == false) throw 'file not exists';
-      return  File.getContent(filePath);
+      trace(filePath);
+      return loadFileAsString(filePath);
+      //var absolutePath = Sys.getCwd() + "/" + filePath;
+      //trace(absolutePath);
+      //if (sys.FileSystem.exists(filePath) == false) throw 'file not exists';
+      //return  File.getContent(filePath);
     }
 
     if (meta.exists(annotationInline)) {
@@ -47,10 +65,28 @@ class RiotBuilder {
     });
   }
 
+  static function getBindsSuperClass() {
+    if (haxe.macro.Context.getLocalClass().get().superClass != null ) {
+      var fieldsSuperClass = haxe.macro.Context.getLocalClass().get().superClass.t.get().fields.get();
+      var bindsSuperClass = fieldsSuperClass.filter(function(f) {
+        return f.meta.get().toMap().exists(':bind');
+      }).map(function(f) {
+        var name = f.name;
+        return macro  {
+            untyped view.$name=$i{name};
+        };
+      });
+      return bindsSuperClass ;
+    } else {
+      return [];
+    }
+
+  }
 
   macro public static function build():Array<Field> {
 
     var fields = Context.getBuildFields();
+
 
     var tagName:String = null;
     var templateFile = "";
@@ -64,7 +100,7 @@ class RiotBuilder {
     if (getAnnotation(':tagName') != null) {
       tagName = getAnnotation(':tagName')[0][0].toString();
     }
-    trace(tagName);
+
     if (tagName == null) return null;
 
     if (getAnnotation(':autoMount') != null) {
@@ -78,23 +114,7 @@ class RiotBuilder {
 
     var template = getTemplateFromAnnotation(meta,':templateFile',':template');
     var cssFile  = getTemplateFromAnnotation(meta,':cssFile',':css');
-
-
-    var binds = bindFields(fields);
-
-
-    if (haxe.macro.Context.getLocalClass().get().superClass != null ) {
-      var fieldsSuperClass = haxe.macro.Context.getLocalClass().get().superClass.t.get().fields.get();
-      var bindsSuperClass = fieldsSuperClass.filter(function(f) {
-        return f.meta.get().toMap().exists(':bind');
-      }).map(function(f) {
-        var name = f.name;
-        return macro  {
-            untyped view.$name=$i{name};
-        };
-      });
-      binds= binds.concat(bindsSuperClass);
-    }
+    var binds = bindFields(fields).concat(getBindsSuperClass());
 
     var init = (macro class Temp {
 

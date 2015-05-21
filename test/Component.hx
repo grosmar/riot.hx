@@ -1,8 +1,8 @@
 using riot.RiotTools;
 
 @:tagName('counter')
-@:templateFile('test/templates/counter/counter.html')
-@:cssFile('test/templates/counter/counter.css')
+@:templateFile('templates/counter/counter.html')
+@:cssFile('templates/counter/counter.css')
 @:autoMount
 @:keep
 class Component implements riot.IRiotComponent {
