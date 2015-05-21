@@ -1,0 +1,14 @@
+{
+  "name": "riot.hx",
+  "license": "MIT",
+  "classPath": "src",
+  "tags": ["riot","web","js"],
+  "description": "haxe wrapper around riot.js",
+  "contributors": ["francescoagati"],
+  "releasenote": "first release",
+  "version": "0.1.0",
+  "url": "https://github.com/francescoagati/riot.hx",
+  "dependencies": {
+    "tink_macro": ""
+  }
+}
