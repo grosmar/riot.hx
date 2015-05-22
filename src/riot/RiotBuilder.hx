@@ -47,32 +47,30 @@ class RiotBuilder {
   }
 
   static function bindFields(fields:Array<Field>) {
-    return fields.filter(function(field) {
-        return field.meta.toMap().exists(':bind');
-    }).map(function(field) {
-      var name = field.name;
-      return macro  {
-          untyped view.$name=$i{name};
-      };
-    });
+    return [
+      for (field in fields) {
+        if (field.meta.toMap().exists(':bind')) {
+          var name = field.name;
+          macro untyped view.$name=$i{name};
+        }
+      }
+    ];
   }
 
   static function getBindsSuperClass() {
     if (haxe.macro.Context.getLocalClass().get().superClass != null ) {
       var fieldsSuperClass = haxe.macro.Context.getLocalClass().get().superClass.t.get().fields.get();
-      var bindsSuperClass = fieldsSuperClass.filter(function(f) {
-        return f.meta.get().toMap().exists(':bind');
-      }).map(function(f) {
-        var name = f.name;
-        return macro  {
-            untyped view.$name=$i{name};
-        };
-      });
-      return bindsSuperClass ;
+      return [
+        for (field in fieldsSuperClass) {
+          if (field.meta.get().toMap().exists(':bind')) {
+            var name = field.name;
+            macro untyped view.$name=$i{name};
+          }
+        }
+      ];
     } else {
       return [];
     }
-
   }
 
   macro public static function build():Array<Field> {
