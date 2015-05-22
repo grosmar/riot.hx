@@ -99,7 +99,11 @@ class RiotBuilder {
 
     var exprAutoMount = macro null;
     if (autoMount == true ) {
-      exprAutoMount = macro untyped riot.mount($i{tagName});
+      exprAutoMount = macro untyped { 
+        setTimeout(function() {
+          riot.mount($i{tagName});  
+        },0);
+      }
     }
 
     var template = getTemplateFromAnnotation(meta,':templateFile',':template');
