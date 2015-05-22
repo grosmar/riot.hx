@@ -12,11 +12,11 @@ class RiotTools {
   }
 
   public static inline function on(component:riot.IRiotComponent,event:String,cb:Dynamic) {
-    untyped component.on(event,cb);
+    untyped component.view.on(event,cb);
   }
 
   public static inline function root(component:riot.IRiotComponent):Element {
-    return untyped component.root;
+    return untyped component.view.root;
   }
 
 }
