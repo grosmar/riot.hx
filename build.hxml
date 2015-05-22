@@ -1,5 +1,5 @@
 -cp src
--main Main
+-main riot.Main
 -js bin/riot.js
 -lib tink_macro
 -D analizer
