@@ -1,8 +1,10 @@
 # riot.hx
 
+haxe wrapper around Riot.js
+
 [![Join the chat at https://gitter.im/francescoagati/riot.hx](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/francescoagati/riot.hx?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-haxe wrapper around Riot.js
+
 
 for install from git
 ```
