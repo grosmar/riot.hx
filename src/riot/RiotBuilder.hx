@@ -11,7 +11,7 @@ using StringTools;
 class RiotBuilder {
 
 
-  static function loadFileAsString(path:String) {
+  inline static function loadFileAsString(path:String) {
      try {
          var p = haxe.macro.Context.resolvePath(path);
          return sys.io.File.getContent(p);
@@ -22,12 +22,11 @@ class RiotBuilder {
      }
   }
 
-  static function getTemplateFromAnnotation(meta:Map<String, Array<Array<Expr>>>,annotationFile:String,annotationInline:String):String {
+  inline static function getTemplateFromAnnotation(meta:Map<String, Array<Array<Expr>>>,annotationFile:String,annotationInline:String):String {
 
     if (meta.exists(annotationFile)) {
-    var filePath = meta.get(annotationFile)[0][0].toString().replace("'","");
-      trace(filePath);
-      return loadFileAsString(filePath);
+      var filePaths = [ for (mt in meta.get(annotationFile)) mt[0].toString().replace("'","") ];
+      return [for (filePath in filePaths) loadFileAsString(filePath)].join("");
     }
 
     if (meta.exists(annotationInline)) {
@@ -37,7 +36,7 @@ class RiotBuilder {
     return "";
   }
 
-  static inline function getAnnotation(name) {
+  inline static inline function getAnnotation(name) {
     var meta = Context.getLocalClass().get().meta.get().toMap();
     if (meta.exists(name)) {
       return meta.get(name);
@@ -46,7 +45,7 @@ class RiotBuilder {
     }
   }
 
-  static function bindFields(fields:Array<Field>) {
+  inline static function bindFields(fields:Array<Field>) {
     return [
       for (field in fields) {
         if (field.meta.toMap().exists(':bind')) {
@@ -57,7 +56,7 @@ class RiotBuilder {
     ];
   }
 
-  static function getBindsSuperClass() {
+  inline static function getBindsSuperClass() {
 
     if (haxe.macro.Context.getLocalClass().get().superClass != null ) {
 

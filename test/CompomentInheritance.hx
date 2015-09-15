@@ -41,6 +41,17 @@ class CompomentInheritanceD extends CompomentInheritanceC {
 
 @:tagName('component-inheritance-1')
 @:templateFile('templates/counter/counter.html')
+@:templateFile('templates/counter/counter.html')
+@:templateFile('templates/counter/counter.html')
+@:templateFile('templates/counter/counter.html')
+@:templateFile('templates/counter/counter.html')
+@:templateFile('templates/counter/counter.html')
+@:templateFile('templates/counter/counter.html')
+@:templateFile('templates/counter/counter.html')
+@:cssFile('templates/counter/counter.css')
+@:cssFile('templates/counter/counter.css')
+@:cssFile('templates/counter/counter.css')
+@:cssFile('templates/counter/counter.css')
 @:cssFile('templates/counter/counter.css')
 @:autoMount
 @:keep
