@@ -12,3 +12,4 @@
 -lib tink_macro
 -D analizer
 -dce full
+ 

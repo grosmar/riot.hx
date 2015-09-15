@@ -58,10 +58,20 @@ class RiotBuilder {
   }
 
   static function getBindsSuperClass() {
+
     if (haxe.macro.Context.getLocalClass().get().superClass != null ) {
-      var fieldsSuperClass = haxe.macro.Context.getLocalClass().get().superClass.t.get().fields.get();
+
+      var fields_inheritance = [];
+
+      var super_class = haxe.macro.Context.getLocalClass().get().superClass;
+      while(super_class != null) {
+        var fields = super_class.t.get().fields.get();
+        for (field in fields) fields_inheritance.push(field);
+        super_class = super_class.t.get().superClass;
+      }
+
       return [
-        for (field in fieldsSuperClass) {
+        for (field in fields_inheritance) {
           if (field.meta.get().toMap().exists(':bind')) {
             var name = field.name;
             macro untyped view.$name=$i{name};
@@ -99,9 +109,9 @@ class RiotBuilder {
 
     var exprAutoMount = macro null;
     if (autoMount == true ) {
-      exprAutoMount = macro untyped { 
+      exprAutoMount = macro untyped {
         setTimeout(function() {
-          riot.mount($i{tagName});  
+          riot.mount($i{tagName});
         },0);
       }
     }

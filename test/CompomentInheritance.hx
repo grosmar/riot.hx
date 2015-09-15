@@ -24,12 +24,27 @@ class BaseComponent implements riot.IRiotComponent  {
 }
 
 
+class CompomentInheritanceA extends BaseComponent {
+  @:bind function methodA() {}
+
+
+}
+class CompomentInheritanceB extends CompomentInheritanceA {
+  @:bind function methodB() {}
+}
+class CompomentInheritanceC extends CompomentInheritanceB {
+  @:bind function methodC() {}
+}
+class CompomentInheritanceD extends CompomentInheritanceC {
+  @:bind function methodD() {}
+}
+
 @:tagName('component-inheritance-1')
 @:templateFile('templates/counter/counter.html')
 @:cssFile('templates/counter/counter.css')
 @:autoMount
 @:keep
-class CompomentInheritance extends BaseComponent  {
+class CompomentInheritance extends CompomentInheritanceD  {
 
 
   public function new(v,opts) {
@@ -56,7 +71,7 @@ class CompomentInheritance extends BaseComponent  {
   }
 ')
 @:keep
-class CompomentInheritance2 extends BaseComponent  {
+class CompomentInheritance2 extends CompomentInheritanceD  {
 
 
   public function new(v,opts) {
