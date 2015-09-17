@@ -11,6 +11,12 @@ class RiotTools {
     untyped component.view.update(value);
   }
 
+
+  public static inline function unmount(component:riot.IRiotComponent,?b:Bool) {
+    untyped component.view.unmount(b);
+  }
+
+
   public static inline function on(component:riot.IRiotComponent,event:String,cb:Dynamic) {
     untyped component.view.on(event,cb);
   }
