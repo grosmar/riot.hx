@@ -10,7 +10,13 @@ using RiotBuilder.Helper;
 
 class Helper {
   public inline static function cleanupTemplate(template:String )
-    return template.replace("'","").replace('\\"','"').replace("\\n","").replace("\\r","");
+    return template
+            .replace("'","")
+            .replace('\\"','"')
+            .replace("\n","")
+            .replace("\r","")
+            .replace("\\n","")
+            .replace("\\r","");
 
 }
 
@@ -34,7 +40,7 @@ class RiotBuilder {
 
     if (meta.exists(annotationFile)) {
       var filePaths = [ for (mt in meta.get(annotationFile)) mt[0].toString().replace("'","") ];
-      return [for (filePath in filePaths) loadFileAsString(filePath)].join("").cleanupTemplate();
+      return [for (filePath in filePaths) loadFileAsString(filePath).cleanupTemplate()].join("");
     }
 
     if (meta.exists(annotationInline)) {
@@ -123,8 +129,8 @@ class RiotBuilder {
       }
     }
 
-    var template = getTemplateFromAnnotation(meta,':templateFile',':template');
-    var cssFile  = getTemplateFromAnnotation(meta,':cssFile',':css');
+    var template = getTemplateFromAnnotation(meta,':templateFile',':template').cleanupTemplate();
+    var cssFile  = getTemplateFromAnnotation(meta,':cssFile',':css').cleanupTemplate();
     var binds = bindFields(fields).concat(getBindsSuperClass());
 
     var init = (macro class Temp {
