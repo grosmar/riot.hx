@@ -6,6 +6,13 @@ using Lambda;
 using tink.macro.Metadatas;
 using tink.MacroApi;
 using StringTools;
+using RiotBuilder.Helper;
+
+class Helper {
+  public inline static function cleanupTemplate(template:String )
+    return template.replace("'","").replace('\\"','"').replace("\\n","").replace("\\r","");
+
+}
 
 
 class RiotBuilder {
@@ -22,15 +29,16 @@ class RiotBuilder {
      }
   }
 
+
   inline static function getTemplateFromAnnotation(meta:Map<String, Array<Array<Expr>>>,annotationFile:String,annotationInline:String):String {
 
     if (meta.exists(annotationFile)) {
-      var filePaths = [ for (mt in meta.get(annotationFile)) mt[0].toString().replace("'","") ];
+      var filePaths = [ for (mt in meta.get(annotationFile)) mt[0].toString().replace("'","").cleanupTemplate() ];
       return [for (filePath in filePaths) loadFileAsString(filePath)].join("");
     }
 
     if (meta.exists(annotationInline)) {
-      var content = meta.get(annotationInline)[0][0].toString().replace("'","").replace('\\"','"').replace("\\n","").replace("\\r","");
+      var content = meta.get(annotationInline)[0][0].toString().cleanupTemplate();
       return  content;
     }
     return "";
