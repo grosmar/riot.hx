@@ -33,8 +33,8 @@ class RiotBuilder {
   inline static function getTemplateFromAnnotation(meta:Map<String, Array<Array<Expr>>>,annotationFile:String,annotationInline:String):String {
 
     if (meta.exists(annotationFile)) {
-      var filePaths = [ for (mt in meta.get(annotationFile)) mt[0].toString().replace("'","").cleanupTemplate() ];
-      return [for (filePath in filePaths) loadFileAsString(filePath)].join("");
+      var filePaths = [ for (mt in meta.get(annotationFile)) mt[0].toString().replace("'","") ];
+      return [for (filePath in filePaths) loadFileAsString(filePath)].join("").cleanupTemplate();
     }
 
     if (meta.exists(annotationInline)) {
