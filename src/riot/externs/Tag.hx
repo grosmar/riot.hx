@@ -2,6 +2,13 @@ package riot.externs;
 
 @:native('riot.Tag')
 extern class Tag {
-  public function new(?impl:Impl,?conf:Conf,?innerHTML:String) {}
-  public function mount():Void {}
+  
+	var isMounted:Bool;
+	var parent:Tag;
+	var tags:Map<String,Dynamic>;
+	
+	function new(?impl:Impl, ?conf:Conf, ?innerHTML:String);
+	function mount():Void;
+  
+	function getInstance():Dynamic;
 }

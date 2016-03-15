@@ -100,7 +100,6 @@ class RiotBuilder {
 
     var fields = Context.getBuildFields();
 
-
     var tagName:String = null;
     var templateFile = "";
     var template = "";
@@ -128,6 +127,20 @@ class RiotBuilder {
         },0);
       }
     }
+	
+	var extraFields = macro : {
+			@:bind
+			function getInstance() {
+				return this;
+			}
+		};
+		
+	switch ( extraFields )
+	{
+		case TAnonymous(extraFields): 
+			fields.push(extraFields[0]);
+		default: 
+	}
 
     var template = getTemplateFromAnnotation(meta,':templateFile',':template').cleanupTemplate();
     var cssFile  = getTemplateFromAnnotation(meta,':cssFile',':css').cleanupTemplate();
@@ -158,7 +171,7 @@ class RiotBuilder {
 
      public inline function bind_view(v) {
          untyped { view = v; };
-          $b{binds};
+          $b { binds };
      }
 
     }).fields;
